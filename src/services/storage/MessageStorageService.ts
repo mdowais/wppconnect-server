@@ -27,9 +27,9 @@ class MessageStorageService {
       return await message.save();
     } catch (error: any) {
       if (error.code === 11000) {
-        // Duplicate key error, update existing
+        // Duplicate key error, update existing message
         return await MessageModel.findOneAndUpdate(
-          { messageId: messageData.messageId },
+          { messageId: messageData.messageId, sessionName: messageData.sessionName },
           messageData,
           { new: true }
         );

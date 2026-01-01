@@ -21,7 +21,7 @@ const MessageModel = config.messageStorage?.enabled && messageMongoose
       'Message',
       new messageMongoose.Schema(
         {
-          messageId: { type: String, required: true, unique: true, index: true },
+          messageId: { type: String, required: true, index: true },
           sessionName: { type: String, required: true, index: true },
           chatId: { type: String, required: true, index: true },
           senderId: { type: String, required: true },
@@ -57,5 +57,10 @@ const MessageModel = config.messageStorage?.enabled && messageMongoose
       )
     )
   : null;
+
+// Create compound unique index for messageId and sessionName
+if (MessageModel) {
+  MessageModel.schema.index({ messageId: 1, sessionName: 1 }, { unique: true });
+}
 
 export default MessageModel;

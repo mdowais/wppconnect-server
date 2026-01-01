@@ -39,8 +39,9 @@ class MessageStorageMiddleware {
         recipientId: message.to,
         content: message.body || message.content || '',
         messageType,
+        // Convert timestamp to Date - handles both seconds and milliseconds
         timestamp: message.timestamp
-          ? new Date(message.timestamp * 1000)
+          ? new Date(message.timestamp > 9999999999 ? message.timestamp : message.timestamp * 1000)
           : new Date(),
         fromMe: message.fromMe || false,
         isForwarded: message.isForwarded || false,

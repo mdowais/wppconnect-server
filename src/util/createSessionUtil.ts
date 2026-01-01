@@ -290,7 +290,7 @@ export default class CreateSessionUtil {
       try {
         await messageStorageMiddleware.storeMessage(message, client.session);
       } catch (error) {
-        req.logger.error('Error storing message:', error);
+        req.logger.error(`[${client.session}] Error storing message:`, error);
       }
       
       if (message.type === 'location')
@@ -333,7 +333,7 @@ export default class CreateSessionUtil {
       try {
         await messageStorageMiddleware.updateMessageAck(ack, client.session);
       } catch (error) {
-        req.logger.error('Error updating message ack:', error);
+        req.logger.error(`[${client.session}] Error updating message ack:`, error);
       }
     });
   }
