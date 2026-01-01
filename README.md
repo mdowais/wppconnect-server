@@ -49,6 +49,20 @@ Detailed documentation and guides are available for your convenience:
 | Create Group                         | ✔   |
 | Join Group by Invite Code            | ✔   |
 | Webhook                              | ✔   |
+| **Message & Chat History Storage**   | ✔   |
+
+### Message and Chat History Storage (New!)
+
+Store and retrieve complete WhatsApp message history, chat data, contacts, and media metadata using MongoDB. This is an **optional** feature that provides:
+
+- 📝 **Automatic Message Storage**: All messages automatically stored when enabled
+- 💬 **Chat History**: Retrieve complete conversation histories
+- 👥 **Contact Management**: Persistent contact information
+- 🖼️ **Media Metadata**: Track media files with metadata
+- 🔍 **Search**: Full-text search across messages and contacts
+- 📊 **Statistics**: Message counts and chat analytics
+
+See [Message Storage Documentation](./docs/MESSAGE_STORAGE.md) for complete setup and API details.
 
 ## Libraries Used
 
@@ -61,6 +75,7 @@ Detailed documentation and guides are available for your convenience:
 - Nodemon
 - SocketIO
 - S3
+- Mongoose (optional, for message storage)
 
 ## Installation
 
