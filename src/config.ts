@@ -103,6 +103,16 @@ export default {
     redisDb: 0,
     redisPrefix: 'docker',
   },
+  messageStorage: {
+    enabled: false,
+    mongodbDatabase: 'wppconnect_messages',
+    mongodbUser: '',
+    mongodbPassword: '',
+    mongodbHost: 'localhost',
+    mongoIsRemote: false,
+    mongoURLRemote: '',
+    mongodbPort: 27017,
+  },
   aws_s3: {
     region: 'sa-east-1' as any,
     access_key_id: null,

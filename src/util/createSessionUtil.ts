@@ -17,6 +17,7 @@ import { create, SocketState, StatusFind } from '@wppconnect-team/wppconnect';
 import { Request } from 'express';
 
 import { download } from '../controller/sessionController';
+import messageStorageMiddleware from '../middleware/messageStorage.middleware';
 import { WhatsAppServer } from '../types/WhatsAppServer';
 import chatWootClient from './chatWootClient';
 import { autoDownload, callWebHook, startHelper } from './functions';
@@ -284,6 +285,14 @@ export default class CreateSessionUtil {
     await client.onMessage(async (message: any) => {
       eventEmitter.emit(`mensagem-${client.session}`, client, message);
       callWebHook(client, req, 'onmessage', message);
+      
+      // Store message if message storage is enabled
+      try {
+        await messageStorageMiddleware.storeMessage(message, client.session);
+      } catch (error) {
+        req.logger.error(`[${client.session}] Error storing message:`, error);
+      }
+      
       if (message.type === 'location')
         client.onLiveLocation(message.sender.id, (location) => {
           callWebHook(client, req, 'location', location);
@@ -319,6 +328,13 @@ export default class CreateSessionUtil {
     await client.onAck(async (ack) => {
       req.io.emit('onack', ack);
       callWebHook(client, req, 'onack', ack);
+      
+      // Update message ack status if message storage is enabled
+      try {
+        await messageStorageMiddleware.updateMessageAck(ack, client.session);
+      } catch (error) {
+        req.logger.error(`[${client.session}] Error updating message ack:`, error);
+      }
     });
   }
 

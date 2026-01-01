@@ -59,6 +59,16 @@ export interface ServerOptions {
     redisDb: string;
     redisPrefix: string;
   };
+  messageStorage: {
+    enabled: boolean;
+    mongodbDatabase: string;
+    mongodbUser: string;
+    mongodbPassword: string;
+    mongodbHost: string;
+    mongoIsRemote: boolean;
+    mongoURLRemote: string;
+    mongodbPort: number;
+  };
   aws_s3: {
     region: BucketLocationConstraint | null;
     access_key_id: string | null;

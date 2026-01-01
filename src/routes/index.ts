@@ -19,12 +19,15 @@ import swaggerUi from 'swagger-ui-express';
 
 import uploadConfig from '../config/upload';
 import * as CatalogController from '../controller/catalogController';
+import * as ChatHistoryController from '../controller/chatHistoryController';
 import * as CommunityController from '../controller/communityController';
 import ContactController from '../controller/contactController';
+import * as ContactHistoryController from '../controller/contactHistoryController';
 import * as DeviceController from '../controller/deviceController';
 import { encryptSession } from '../controller/encryptController';
 import * as GroupController from '../controller/groupController';
 import * as LabelsController from '../controller/labelsController';
+import * as MediaHistoryController from '../controller/mediaHistoryController';
 import * as MessageController from '../controller/messageController';
 import * as MiscController from '../controller/miscController';
 import * as NewsletterController from '../controller/newsletterController';
@@ -954,6 +957,58 @@ routes.post(
 );
 
 routes.post('/api/:session/chatwoot', DeviceController.chatWoot);
+
+// Message and Chat History Storage
+routes.get(
+  '/api/:session/history/chats',
+  verifyToken,
+  ChatHistoryController.getAllStoredChats
+);
+routes.get(
+  '/api/:session/history/chats/:chatId',
+  verifyToken,
+  ChatHistoryController.getChatById
+);
+routes.get(
+  '/api/:session/history/chats/:chatId/messages',
+  verifyToken,
+  ChatHistoryController.getChatMessages
+);
+routes.get(
+  '/api/:session/history/chats/:chatId/stats',
+  verifyToken,
+  ChatHistoryController.getChatStats
+);
+routes.get(
+  '/api/:session/history/messages/search',
+  verifyToken,
+  ChatHistoryController.searchMessages
+);
+routes.get(
+  '/api/:session/history/contacts',
+  verifyToken,
+  ContactHistoryController.getAllStoredContacts
+);
+routes.get(
+  '/api/:session/history/contacts/:contactId',
+  verifyToken,
+  ContactHistoryController.getStoredContactById
+);
+routes.get(
+  '/api/:session/history/contacts/search',
+  verifyToken,
+  ContactHistoryController.searchStoredContacts
+);
+routes.get(
+  '/api/:session/history/media',
+  verifyToken,
+  MediaHistoryController.getAllStoredMedia
+);
+routes.get(
+  '/api/:session/history/media/:messageId',
+  verifyToken,
+  MediaHistoryController.getMediaByMessageId
+);
 
 // Api Doc
 routes.use('/api-docs', swaggerUi.serve as any);
